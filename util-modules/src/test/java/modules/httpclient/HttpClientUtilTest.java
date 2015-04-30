@@ -18,7 +18,7 @@ public class HttpClientUtilTest extends TestCase {
 
     public void testPost() {
         String url="https://110.249.176.140:8443/JsonMainServlet.cl";
-        String content="{\"header\":{\"key\":\"\",\"mobile\":\"\",\"sessionid\":\"\",\"status\":\"\",\"trancecode\":\"10055\",\"userid\":\"\",\"version\":\"1.0.0\"},\"password\":\"FB0E22C79AC75679\",\"username\":\"13241744496\"}";
+        String content="{\"header\":{\"key\":\"\",\"mobile\":\"\",\"sessionid\":\"\",\"status\":\"\",\"trancecode\":\"10055\",\"userid\":\"\",\"version\":\"1.0.0\"},\"password\":\"FB0E22C79AC75679\",\"username\":\"15901232734\"}";
         Map<String,String> params=new HashMap<>();
         params.put("json",content);
         String post = HttpClient4Util.post(url, params, true, 8843);
