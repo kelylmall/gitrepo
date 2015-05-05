@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -48,17 +49,26 @@ public class JDBCUtilsTest {
 	@Test
 	public void testBatch() throws SQLException {
 		List<Object[]> list=new ArrayList<>();
+
 		for (int i = 0; i <10000 ; i++) {
-			Object[] param=new Object[]{UUID.randomUUID().toString(),"test",12,new Date(),0,i};
+			String s = UUID.randomUUID().toString();
+			Date date = new Date();
+			Object[] param=new Object[]{s,"test",12, date,0,i};
 			list.add(param);
 		}
+
 		long s= System.currentTimeMillis();
 		System.out.println(s);
 		JDBCUtil JDBCUtil=new JDBCUtil();
+
+
+
+
 		JDBCUtil.batch(INSERT_SQL, list, conn);
 		long e = System.currentTimeMillis();
 		System.out.println(e-s);
 	}
+
 
 	@Test
 	public void testInsertByOne() throws SQLException {
