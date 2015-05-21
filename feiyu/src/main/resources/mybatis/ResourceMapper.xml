@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.github.kelylm.repository.ResourceDao">
+
+	<resultMap id="resultMap" type="com.github.kelylm.entity.Resource">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="type" column="type" />
+		<result property="url" column="url" />
+		<result property="parentId" column="parent_id" />
+		<result property="parentIds" column="parent_ids" />
+		<result property="permission" column="permission" />
+		<result property="available" column="available" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		id,name,type,url,parent_id,parent_ids,permission,available
+	</sql>
+
+	<!-- 获取用户: 输出直接映射到对象 -->
+	<select id="get" parameterType="Long" resultType="Resource">
+		SELECT
+		<include refid="columns" />
+		FROM sys_resource
+		WHERE id=#{id}
+	</select>
+
+
+	<!-- 查询用户, 不分页 -->
+	<select id="search" parameterType="map" resultMap="resultMap">
+		SELECT
+		<include refid="columns" />
+		FROM sys_resource
+		<where>
+			<if test="name != null and name != ''">
+				AND name = #{name}
+			</if>
+			<if test="type != null and type != ''">
+				AND type = #{type}
+			</if>
+			<if test="url != null and url != ''">
+				AND url = #{url}
+			</if>
+			<if test="parentId != null and parentId != ''">
+				AND parent_id = #{parentId}
+			</if>
+			<if test="parentIds != null and parentIds != ''">
+				AND parent_ids = #{parentIds}
+			</if>
+			<if test="permission != null and permission != ''">
+				AND permission = #{permission}
+			</if>
+			<if test="available != null and available != ''">
+				AND available = #{available}
+			</if>
+		</where>
+	</select>
+
+	<!-- 分页查询 -->
+	<select id="searchPage" resultMap="resultMap">
+		SELECT
+		<include refid="columns" />
+		FROM sys_resource
+		<where>
+			<if test="searchFields.name != null and searchFields.name != ''">
+				AND name = #{searchFields.name}
+			</if>
+			<if test="searchFields.type != null and searchFields.type != ''">
+				AND type = #{searchFields.type}
+			</if>
+			<if test="searchFields.url != null and searchFields.url != ''">
+				AND url = #{searchFields.url}
+			</if>
+			<if test="searchFields.parentId != null and searchFields.parentId != ''">
+				AND parent_id = #{searchFields.parentId}
+			</if>
+			<if test="searchFields.parentIds != null and searchFields.parentIds != ''">
+				AND parent_ids = #{searchFields.parentIds}
+			</if>
+			<if
+				test="searchFields.permission != null and searchFields.permission != ''">
+				AND permission = #{searchFields.permission}
+			</if>
+			<if test="searchFields.available != null and searchFields.available != ''">
+				AND available = #{searchFields.available}
+			</if>
+		</where>
+	</select>
+
+	<!-- 新增 -->
+	<insert id="insert" parameterType="Resource" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO sys_resource (
+		name,
+		type,
+		url,
+		parent_id,
+		parent_ids,
+		permission,
+		available
+		) VALUES (
+		#{name},
+		#{type},
+		#{url},
+		#{parentId},
+		#{parentIds},
+		#{permission},
+		#{available}
+		)
+	</insert>
+
+	<!-- 更新 -->
+	<update id="update">
+		UPDATE sys_resource
+		<set>
+			name = #{name},
+			type = #{type},
+			url = #{url},
+			parent_id =
+			#{parentId},
+			parent_ids = #{parentIds},
+			permission = #{permission},
+			available = #{available}
+		</set>
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- 删除用户 -->
+	<delete id="delete" parameterType="Long">
+		DELETE FROM sys_resource WHERE id=#{id}
+	</delete>
+</mapper> 

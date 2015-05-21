@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.github.kelylm.repository.RoleDao">
+
+	<resultMap id="resultMap" type="com.github.kelylm.entity.Role">
+		<result property="id" column="id" />
+		<result property="role" column="role" />
+		<result property="description" column="description" />
+		<result property="resourceIds" column="resource_ids" />
+		<result property="available" column="available" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		id,role,description,resource_ids,available
+	</sql>
+
+	<!-- 获取用户: 输出直接映射到对象 -->
+	<select id="get" parameterType="Long" resultType="Role">
+		SELECT
+		<include refid="columns" />
+		FROM sys_role
+		WHERE id=#{id}
+	</select>
+
+
+	<!-- 查询用户, 不分页 -->
+	<select id="search" parameterType="map" resultMap="resultMap">
+		SELECT
+		<include refid="columns" />
+		FROM sys_role
+		<where>
+			<if test="role != null and role != ''">
+				AND role = #{role}
+			</if>
+			<if test="description != null and description != ''">
+				AND description = #{description}
+			</if>
+			<if test="resourceIds != null and resourceIds != ''">
+				AND resource_ids = #{resourceIds}
+			</if>
+			<if test="available != null and available != ''">
+				AND available = #{available}
+			</if>
+		</where>
+	</select>
+
+	<!-- 分页查询 -->
+	<select id="searchPage" resultMap="resultMap">
+		SELECT
+		<include refid="columns" />
+		FROM sys_role
+		<where>
+			<if test="searchFields.role != null and searchFields.role != ''">
+				AND role = #{searchFields.role}
+			</if>
+			<if
+				test="searchFields.description != null and searchFields.description != ''">
+				AND description = #{searchFields.description}
+			</if>
+			<if
+				test="searchFields.resourceIds != null and searchFields.resourceIds != ''">
+				AND resource_ids = #{searchFields.resourceIds}
+			</if>
+			<if test="searchFields.available != null and searchFields.available != ''">
+				AND available = #{searchFields.available}
+			</if>
+		</where>
+	</select>
+
+	<!-- 新增 -->
+	<insert id="insert" parameterType="Role" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO sys_role (
+		role,
+		description,
+		resource_ids,
+		available
+		) VALUES (
+		#{role},
+		#{description},
+		#{resourceIds},
+		#{available}
+		)
+	</insert>
+
+	<!-- 更新 -->
+	<update id="update">
+		UPDATE sys_role
+		<set>
+			role = #{role},
+			description = #{description},
+			resource_ids =
+			#{resourceIds},
+			available = #{available}
+		</set>
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- 删除用户 -->
+	<delete id="delete" parameterType="Long">
+		DELETE FROM sys_role WHERE id=#{id}
+	</delete>
+</mapper> 

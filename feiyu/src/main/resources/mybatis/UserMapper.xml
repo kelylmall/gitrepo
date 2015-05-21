@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.github.kelylm.repository.UserDao">
+
+	<resultMap id="resultMap" type="com.github.kelylm.entity.User">
+		<result property="id" column="id" />
+		<result property="organizationId" column="organization_id" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="salt" column="salt" />
+		<result property="locked" column="locked" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		id,organization_id,username,password,salt,locked
+	</sql>
+
+	<!-- 获取用户: 输出直接映射到对象 -->
+	<select id="get" parameterType="Long" resultType="User">
+		SELECT
+		<include refid="columns" />
+		FROM sys_user
+		WHERE id=#{id}
+	</select>
+
+
+	<!-- 查询用户, 不分页 -->
+	<select id="search" parameterType="map" resultMap="resultMap">
+		SELECT
+		<include refid="columns" />
+		FROM sys_user
+		<where>
+			<if test="organizationId != null and organizationId != ''">
+				AND organization_id = #{organizationId}
+			</if>
+			<if test="username != null and username != ''">
+				AND username = #{username}
+			</if>
+			<if test="password != null and password != ''">
+				AND password = #{password}
+			</if>
+			<if test="salt != null and salt != ''">
+				AND salt = #{salt}
+			</if>
+			<if test="locked != null and locked != ''">
+				AND locked = #{locked}
+			</if>
+		</where>
+	</select>
+
+	<!-- 分页查询 -->
+	<select id="searchPage" resultMap="resultMap">
+		SELECT
+		<include refid="columns" />
+		FROM sys_user
+		<where>
+			<if
+				test="searchFields.organizationId != null and searchFields.organizationId != ''">
+				AND organization_id = #{searchFields.organizationId}
+			</if>
+			<if test="searchFields.username != null and searchFields.username != ''">
+				AND username = #{searchFields.username}
+			</if>
+			<if test="searchFields.password != null and searchFields.password != ''">
+				AND password = #{searchFields.password}
+			</if>
+			<if test="searchFields.salt != null and searchFields.salt != ''">
+				AND salt = #{searchFields.salt}
+			</if>
+			<if test="searchFields.locked != null and searchFields.locked != ''">
+				AND locked = #{searchFields.locked}
+			</if>
+		</where>
+	</select>
+
+	<!-- 新增 -->
+	<insert id="insert" parameterType="User" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO sys_user (
+		organization_id,
+		username,
+		password,
+		salt,
+		locked
+		) VALUES (
+		#{organizationId},
+		#{username},
+		#{password},
+		#{salt},
+		#{locked}
+		)
+	</insert>
+
+	<!-- 更新 -->
+	<update id="update">
+		UPDATE sys_user
+		<set>
+			organization_id = #{organizationId},
+			username = #{username},
+			password = #{password},
+			salt = #{salt},
+			locked = #{locked}
+		</set>
+		WHERE
+		id = #{id}
+	</update>
+
+	<!-- 删除用户 -->
+	<delete id="delete" parameterType="Long">
+		DELETE FROM sys_user WHERE id=#{id}
+	</delete>
+</mapper> 
