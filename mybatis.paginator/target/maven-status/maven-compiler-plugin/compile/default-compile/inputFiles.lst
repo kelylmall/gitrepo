@@ -1,0 +1,14 @@
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/jdbc/dialet/DB2Dialect.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/MybatisPaginationInterceptor.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/page/Common.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/jdbc/dialet/SQLServerDialect.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/jdbc/dialet/MySQLDialect.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/jdbc/dialet/SQLServer2005Dialect.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/jdbc/dialet/SybaseDialect.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/jdbc/dialet/DerbyDialect.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/jdbc/dialet/H2Dialect.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/jdbc/dialet/PostgreSQLDialect.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/ReflectHelper.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/jdbc/dialet/Dialect.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/jdbc/dialet/HSQLDialect.java
+/home/kelylm/workspace/mybatis.paginator/src/main/java/com/github/plugin/paginator/mybatis/jdbc/dialet/OracleDialect.java
