@@ -73,7 +73,7 @@ public class MybatisPaginationInterceptor implements Interceptor {
 			String sql = bufferSql.toString();
 			// 1. 搞定分页 记录总数
 			// int total = this.queryTotal(sql, ms, boundSql);
-			Integer total = queryCount(inv, queryArgs, ms, boundSql, sql);
+			Integer total =this.queryCount(inv, queryArgs, ms, boundSql, sql);
 			logger.debug("count :" + total.intValue());
 			// 2. 搞定limit 查询
 			// 2.1 获取分页SQL，并完成参数准备
@@ -101,7 +101,6 @@ public class MybatisPaginationInterceptor implements Interceptor {
 									throws InvocationTargetException, IllegalAccessException {
 		String countSql = this.dialect.getCountString(sql);
 		queryArgs[MAPPED_STATEMENT_INDEX] = copyFromMappedStatementToCountMappedStatement(ms, boundSql, countSql);
-
 		// 查询总数
 		Object result = inv.proceed();
 		// 设置总数
